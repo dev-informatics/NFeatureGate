@@ -50,5 +50,13 @@ namespace NFeatureGate
             _featureGates.Add(binder.Name, (NFeatureState)value);
             return true;
         }
+
+        public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
+        {
+            string featureName = indexes[0].ToString();
+            result = _featureGates[featureName];
+            return true;
+        }
+
     }
 }

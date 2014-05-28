@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\INState.cs" />
     <Compile Include="NFeatureBranch.cs" />
     <Compile Include="NFeatureCollection.cs" />
     <Compile Include="NFeatureContext.cs" />

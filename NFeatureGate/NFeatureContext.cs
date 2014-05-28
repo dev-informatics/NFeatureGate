@@ -18,6 +18,7 @@ namespace NFeatureGate
         {
             _storageAdapter = storageAdapter;
             ActiveBranch = _storageAdapter.FeatureBranches.FirstOrDefault(n => n.IsActive);
+            ActiveBranch.CurrentContext = this;
         }
     }
 }
