@@ -1,10 +1,5 @@
-﻿using NFeatureGate.Storage;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
+﻿using NFeatureGate.Contracts.Storage;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NFeatureGate
 {
@@ -12,13 +7,12 @@ namespace NFeatureGate
     {
         public NFeatureBranch ActiveBranch { get; set; }
 
-        private readonly IStorageAdapter _storageAdapter;
+        private readonly INFeatureStorageAdapter _storageAdapter;
 
-        public NFeatureContext(IStorageAdapter storageAdapter)
+        public NFeatureContext(INFeatureStorageAdapter storageAdapter)
         {
             _storageAdapter = storageAdapter;
-            ActiveBranch = _storageAdapter.FeatureBranches.FirstOrDefault(n => n.IsActive);
-            ActiveBranch.CurrentContext = this;
+            ActiveBranch = _storageAdapter.GetBranches().FirstOrDefault(n => n.IsActive);
         }
     }
 }

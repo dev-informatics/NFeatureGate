@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NFeatureGate
 {
     public class NFeatureBranch
     {
+        public NFeatureBranch()
+        {
+            Features = new Dictionary<string, NFeature>();
+        }
+
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        internal NFeatureContext CurrentContext { get; set; }
-        public dynamic FeatureCollection { get; set; }
-
-        public NFeatureState GetFeatureState(string stateName)
-        {
-            return FeatureCollection[stateName];
-        }
+        public IDictionary<string, NFeature> Features { get; set; } 
     }
 }

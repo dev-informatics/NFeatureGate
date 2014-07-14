@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NFeatureGate.Contracts;
+using Microsoft.WindowsAzure.Storage.Table;
 
-namespace NFeatureGate
+namespace NFeature.AzureTablesStorageAdapter.Models
 {
-    public class NFeature
+    public class FeatureEntity : TableEntity
     {
         public string Name { get; set; }
     }

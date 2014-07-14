@@ -1,14 +1,11 @@
 ﻿using NFeatureGate;
-using NFeatureGate.Storage;
-using System;
+using NFeatureGate.Contracts.Storage;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MemoryStorageAdapter
 {
-    public class InMemoryStorageAdapter : IStorageAdapter
+    public class InMemoryStorageAdapter : INFeatureStorageAdapter
     {
         private List<NFeatureBranch> _featureBranches;
         private List<NFeature> _baseGates;
@@ -19,17 +16,11 @@ namespace MemoryStorageAdapter
             {
                 new NFeature()
                 {
-                    IsEnabled = true,
-                    Name = "DemoFeature"
-                }
-            };
-
-            List<NFeatureState> states = new List<NFeatureState>()
-            {
-                new NFeatureState()
+                    Name = "Demo"
+                },
+                new NFeature()
                 {
-                    Feature = _baseGates[0],
-                    State = true
+                    Name = "Test"
                 }
             };
 
@@ -37,21 +28,31 @@ namespace MemoryStorageAdapter
             {
                 new NFeatureBranch()
                 {
-                    FeatureCollection = new NFeatureCollection(states),
+                    IsActive = true,
                     Name = "Development",
-                    IsActive = true
+                    Features = _baseGates.ToDictionary(n => n.Name, n => n)
                 }
             };
         }
 
-        public IEnumerable<NFeatureBranch> FeatureBranches
+        public IEnumerable<NFeatureBranch> GetBranches()
         {
-            get { return _featureBranches; }
+            return _featureBranches;
         }
 
-        public IEnumerable<NFeature> Features
+        public IEnumerable<NFeature> GetFeatures()
         {
-            get { return _baseGates; }
+            return _baseGates;
+        }
+
+        public void AddBranch(NFeatureBranch branch)
+        {
+            _featureBranches.Add(branch);
+        }
+
+        public void AddFeature(NFeature feature)
+        {
+            _baseGates.Add(feature);
         }
     }
 }
