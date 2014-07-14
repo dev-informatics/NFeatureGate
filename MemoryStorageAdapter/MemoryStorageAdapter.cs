@@ -30,7 +30,13 @@ namespace MemoryStorageAdapter
                 {
                     IsActive = true,
                     Name = "Development",
-                    Features = _baseGates.ToDictionary(n => n.Name, n => n)
+                    BranchFeatureStates = new NBranchFeatureStateCollection(new List<NBranchFeatureState>()
+                    {
+                        new NBranchFeatureState()
+                        {
+                            Feature = _baseGates.FirstOrDefault()
+                        }
+                    })
                 }
             };
         }

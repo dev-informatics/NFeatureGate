@@ -7,7 +7,7 @@ using NFeatureGate.Contracts;
 
 namespace NFeatureGate
 {
-    public class NFeatureState
+    public class NBranchFeatureState
     {
         public NFeature Feature { get; set; }
 

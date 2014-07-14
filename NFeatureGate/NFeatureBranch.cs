@@ -7,11 +7,11 @@ namespace NFeatureGate
     {
         public NFeatureBranch()
         {
-            Features = new Dictionary<string, NFeature>();
+            BranchFeatureStates = new NBranchFeatureStateCollection();
         }
 
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public IDictionary<string, NFeature> Features { get; set; } 
+        public NBranchFeatureStateCollection BranchFeatureStates { get; set; } 
     }
 }

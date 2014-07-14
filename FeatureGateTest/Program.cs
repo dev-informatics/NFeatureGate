@@ -13,7 +13,7 @@ namespace FeatureGateTest
         static void Main(string[] args)
         {
             NFeatureContext ctx = new NFeatureContext(new InMemoryStorageAdapter());
-            if(ctx.ActiveBranch.Features["DemoFeature"].IsEnabled())
+            if(ctx.ActiveBranch.BranchFeatureStates["Demo"].IsEnabled())
             {
                 Console.WriteLine("The DemoFeature is Enabled");
             }
