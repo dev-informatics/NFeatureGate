@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NFeatureGate</id>
+    <version>0.0.1</version>
+    <title>NFeatureGate</title>
+    <authors>Michael Davidson</authors>
+    <owners>Michael Davidson</owners>
+    <licenseUrl>http://devinformatics.com</licenseUrl>
+    <projectUrl>http://devinformatics.com</projectUrl>
+    <iconUrl>http://devinformatics.com</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Feature Gate Framework</description>
+    <releaseNotes>Initial Push to NuGet</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Feature Gate ALM</tags>
+  </metadata>
+</package>

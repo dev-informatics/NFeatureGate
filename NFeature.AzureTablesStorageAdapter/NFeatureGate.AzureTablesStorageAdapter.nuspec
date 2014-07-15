@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NFeatureGate.AzureTableStorageAdapter</id>
+    <version>0.0.1</version>
+    <title>NFeatureGate AzureTableStorageAdapter</title>
+    <authors>Michael Davidson</authors>
+    <owners>Michael Davidson</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NFeatureGate Azure Table Storage Adapter</description>
+    <releaseNotes>Initial push of bits</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>NFeatureGate Adapter ALM Feature Gate</tags>
+  </metadata>
+</package>
