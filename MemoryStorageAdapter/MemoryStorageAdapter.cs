@@ -34,6 +34,7 @@ namespace MemoryStorageAdapter
                     {
                         new NBranchFeatureState()
                         {
+                            IsEnabled = true,
                             Feature = _baseGates.FirstOrDefault()
                         }
                     })

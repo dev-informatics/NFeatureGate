@@ -7,8 +7,9 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace NFeatureGate.AzureTablesStorageAdapter.Models
 {
-    public class FeatureEntity : TableEntity
+    public class BranchEntity : TableEntity
     {
         public string Name { get; set; }
+        public bool IsEnabled { get; set; }
     }
 }

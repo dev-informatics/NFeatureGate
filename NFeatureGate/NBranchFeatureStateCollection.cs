@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NFeatureGate
 {
-    public class NBranchFeatureStateCollection
+    public class NBranchFeatureStateCollection : IEnumerable<NBranchFeatureState>
     {
         private readonly List<NBranchFeatureState> _states = new List<NBranchFeatureState>();
 
@@ -23,6 +20,16 @@ namespace NFeatureGate
         public NBranchFeatureState this[string name]
         {
             get { return _states.FirstOrDefault(n => n.Feature.Name == name); }
+        }
+
+        public IEnumerator<NBranchFeatureState> GetEnumerator()
+        {
+            return _states.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _states.GetEnumerator();
         }
     }
 }

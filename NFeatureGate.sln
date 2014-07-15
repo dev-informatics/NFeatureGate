@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryStorageAdapter", "Mem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureGateTest", "FeatureGateTest\FeatureGateTest.csproj", "{B32DD9D3-8B9F-4B0D-B4E5-472256B1E7FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFeature.AzureTablesStorageAdapter", "NFeature.AzureTablesStorageAdapter\NFeature.AzureTablesStorageAdapter.csproj", "{A425DFEF-9E05-4DF6-9311-A36BF13FBD33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFeatureGate.AzureTablesStorageAdapter", "NFeature.AzureTablesStorageAdapter\NFeatureGate.AzureTablesStorageAdapter.csproj", "{A425DFEF-9E05-4DF6-9311-A36BF13FBD33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
