@@ -19,7 +19,7 @@ namespace NFeatureGate
 
         public NBranchFeatureState this[string name]
         {
-            get { return _states.FirstOrDefault(n => n.Feature.Name == name); }
+            get { return _states.FirstOrDefault(n => n.Feature.Name.Trim().ToLower().Equals(name.Trim().ToLower())); }
         }
 
         public IEnumerator<NBranchFeatureState> GetEnumerator()

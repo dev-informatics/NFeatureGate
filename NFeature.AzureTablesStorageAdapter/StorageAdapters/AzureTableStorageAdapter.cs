@@ -11,6 +11,7 @@ namespace NFeatureGate.StorageAdapters
     public class AzureTableStorageAdapter : INFeatureStorageAdapter
     {
         private readonly CloudStorageAccount _cloudStorageAccount;
+        private readonly CloudTableClient _cloudTableClient;
         private readonly CloudTable _featuresTable;
         private readonly CloudTable _branchesTable;
         private readonly CloudTable _branchFeaturesTable;
@@ -27,9 +28,9 @@ namespace NFeatureGate.StorageAdapters
             _branchFeaturesTable.CreateIfNotExists();
         }
 
-        public IEnumerable<NFeatureGate.NFeatureBranch> GetBranches()
+        public IEnumerable<NFeatureBranch> GetBranches()
         {
-            List<NFeatureBranch> branchList = new List<NFeatureBranch>();
+            var branchList = new List<NFeatureBranch>();
 
             _branchesTable.CreateQuery<BranchEntity>().ToList().ForEach(branch => branchList.Add(new NFeatureBranch()
             {
@@ -58,7 +59,7 @@ namespace NFeatureGate.StorageAdapters
             return featuresStates;
         }
 
-        public System.Collections.Generic.IEnumerable<NFeatureGate.NFeature> GetFeatures()
+        public IEnumerable<NFeature> GetFeatures()
         {
             return _featuresTable.CreateQuery<FeatureEntity>().Select(n => new NFeature()
             {
@@ -66,29 +67,35 @@ namespace NFeatureGate.StorageAdapters
             }).ToList();
         }
 
-        public void AddBranch(NFeatureGate.NFeatureBranch branch)
+        public void AddBranch(NFeatureBranch branch)
         {
-            var insertOp = TableOperation.InsertOrReplace(new BranchEntity()
+            var insertOp = TableOperation.Insert(new BranchEntity()
             {
+                PartitionKey = Guid.Empty.ToString(),
+                RowKey = Guid.NewGuid().ToString(),
                 IsEnabled = branch.IsActive,
                 Name = branch.Name
             });
 
-            if (branch.BranchFeatureStates.Count() != _featuresTable.CreateQuery<FeatureEntity>().Count())
+            if (branch.BranchFeatureStates.Count() != _featuresTable.CreateQuery<FeatureEntity>().ToList().Count())
                 throw new Exception("Branch Feature State count must match the number of Features in the data-store.");
 
             branch.BranchFeatureStates.ToList().ForEach(bfs => CreateBranchFeatureState(new BranchFeatureEntity()
             {
-                Branch = bfs.Feature.Name,
+                PartitionKey = Guid.Empty.ToString(),
+                Feature = bfs.Feature.Name,
+                Branch = branch.Name,
                 IsActive = bfs.IsEnabled
             }));
             _branchesTable.Execute(insertOp);
         }
 
-        public void AddFeature(NFeatureGate.NFeature feature)
+        public void AddFeature(NFeature feature)
         {
-            var insertOp = TableOperation.InsertOrReplace(new FeatureEntity()
+            var insertOp = TableOperation.Insert(new FeatureEntity()
             {
+                PartitionKey = Guid.Empty.ToString(),
+                RowKey = Guid.NewGuid().ToString(),
                 Name = feature.Name
             });
             _featuresTable.Execute(insertOp);
@@ -96,8 +103,54 @@ namespace NFeatureGate.StorageAdapters
 
         private void CreateBranchFeatureState(BranchFeatureEntity entity)
         {
-            var insertOp = TableOperation.InsertOrReplace(entity);
+            entity.PartitionKey = Guid.Empty.ToString();
+            entity.RowKey = Guid.NewGuid().ToString();
+            var insertOp = TableOperation.Insert(entity);
             _branchFeaturesTable.Execute(insertOp);
+        }
+        
+        public NFeatureBranch GetFeatureBranch(string name)
+        {
+            var branch = _branchesTable.CreateQuery<BranchEntity>().FirstOrDefault(n => n.Name.Trim().ToLower().Equals(name.Trim().ToLower()));
+
+            return new NFeatureBranch()
+            {
+                BranchFeatureStates = new NBranchFeatureStateCollection(GetBranchFeatures(branch)),
+                IsActive = branch.IsEnabled,
+                Name = branch.Name
+            };
+        }
+
+        public NFeature GetFeature(string name)
+        {
+            var feature =
+                _featuresTable.CreateQuery<FeatureEntity>()
+                    .FirstOrDefault(n => n.Name.Trim().ToLower().Equals(name.Trim().ToLower()));
+
+            return new NFeature()
+            {
+                Name = feature.Name
+            };
+        }
+
+        public void ClearStorage()
+        {
+            _featuresTable.CreateQuery<FeatureEntity>().ToList().ForEach(f =>
+            {
+                var delOp = TableOperation.Delete(f);
+                _featuresTable.Execute(delOp);
+            });
+            _branchFeaturesTable.CreateQuery<BranchFeatureEntity>().ToList().ForEach(bf =>
+            {
+                var delOp = TableOperation.Delete(bf);
+                _branchFeaturesTable.Execute(delOp);
+            });
+            _branchesTable.CreateQuery<BranchEntity>().ToList().ForEach(b =>
+            {
+                var delOp = TableOperation.Delete(b);
+                _branchesTable.Execute(delOp);
+            });
+            
         }
     }
 }

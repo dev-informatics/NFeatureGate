@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NFeatureGate.AzureTableStorageAdapter</id>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
     <title>NFeatureGate AzureTableStorageAdapter</title>
     <authors>Michael Davidson</authors>
     <owners>Michael Davidson</owners>

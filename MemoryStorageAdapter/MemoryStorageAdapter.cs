@@ -61,5 +61,22 @@ namespace MemoryStorageAdapter
         {
             _baseGates.Add(feature);
         }
+
+
+        public NFeatureBranch GetFeatureBranch(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public NFeature GetFeature(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public void ClearStorage()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

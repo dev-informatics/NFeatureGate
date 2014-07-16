@@ -11,5 +11,11 @@ namespace NFeatureGate.Contracts.Storage
         void AddBranch(NFeatureBranch branch);
 
         void AddFeature(NFeature feature);
+
+        NFeatureBranch GetFeatureBranch(string name);
+
+        NFeature GetFeature(string name);
+
+        void ClearStorage();
     }
 }

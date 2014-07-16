@@ -2,13 +2,10 @@
 <package >
   <metadata>
     <id>NFeatureGate</id>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <title>NFeatureGate</title>
     <authors>Michael Davidson</authors>
     <owners>Michael Davidson</owners>
-    <licenseUrl>http://devinformatics.com</licenseUrl>
-    <projectUrl>http://devinformatics.com</projectUrl>
-    <iconUrl>http://devinformatics.com</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Feature Gate Framework</description>
     <releaseNotes>Initial Push to NuGet</releaseNotes>
