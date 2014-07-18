@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using NFeatureGate.Events;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NFeatureGate
 {
     public class NBranchFeatureStateCollection : IEnumerable<NBranchFeatureState>
     {
-        private readonly List<NBranchFeatureState> _states = new List<NBranchFeatureState>();
+        private readonly IDictionary<string, NBranchFeatureState> _states = new Dictionary<string, NBranchFeatureState>(StringComparer.OrdinalIgnoreCase);
 
         public NBranchFeatureStateCollection()
         {
@@ -14,22 +16,35 @@ namespace NFeatureGate
 
         public NBranchFeatureStateCollection(IEnumerable<NBranchFeatureState> branchFeatureStates)
         {
-            _states = branchFeatureStates.ToList();
+            branchFeatureStates.ToList().ForEach(s =>
+            {
+                s.Feature.NameChanged += UpdateFeatureName;
+            });
         }
 
         public NBranchFeatureState this[string name]
         {
-            get { return _states.FirstOrDefault(n => n.Feature.Name.Trim().ToLower().Equals(name.Trim().ToLower())); }
+            get { return _states[name.Trim()]; }
         }
 
         public IEnumerator<NBranchFeatureState> GetEnumerator()
         {
-            return _states.GetEnumerator();
+            return _states.Values.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _states.GetEnumerator();
+            return _states.Values.GetEnumerator();
+        }
+
+        private void UpdateFeatureName(NFeature sender, NFeatureChangedEventArgs args)
+        {
+            var state = _states[args.Name];
+            if (state == null)
+                throw new InvalidOperationException("State Collection received event for non-existant feature");
+
+            _states.Remove(args.Name);
+            _states.Add(args.Name, state);
         }
     }
 }
